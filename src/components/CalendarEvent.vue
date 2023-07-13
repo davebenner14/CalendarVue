@@ -55,8 +55,16 @@ export default {
       this.newEventDetails = this.event.details;
     },
     submitEvent() {
-      // Perform the submit action here
-      console.log("Submit clicked");
+      if (this.newEventDetails === "") return;
+
+      this.submittingEvent = true;
+      store.updateEvent(this.day.id, this.event.details, this.newEventDetails);
+      this.newEventDetails = "";
+      this.editingEvent = false;
+      this.selectedEvent = false;
+      setTimeout(() => {
+        this.submittingEvent = false;
+      }, 500);
     },
     cancelEditingEvent() {
       this.newEventDetails = "";
