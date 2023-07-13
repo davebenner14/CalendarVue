@@ -10,7 +10,6 @@
         :key="day.events.indexOf(event)"
         :event="event"
         :day="day"
-        v-model="event.selectedEvent"
       />
     </div>
   </div>

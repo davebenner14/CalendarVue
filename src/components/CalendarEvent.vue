@@ -5,19 +5,24 @@
     :class="{ selected: selectedEvent }"
     @click.stop="selectEvent"
   >
-    <span class="has-text-centered details">{{ event.details }}</span>
-    <div v-if="selectedEvent" class="has-text-centered icons">
-      <button v-if="!editingEvent" @click.stop="startEditingEvent">Edit</button>
-      <button @click.stop="deleteEvent">Delete</button>
-    </div>
-    <div v-if="editingEvent">
+    <span class="has-text-centered details">
+      <span v-if="!editingEvent">{{ event.details }}</span>
       <input
+        v-else
         v-model="newEventDetails"
         type="text"
         :placeholder="event.details"
       />
-      <div class="has-text-centered icons">
-        <button @click.stop="finishEditingEvent">Submit</button>
+    </span>
+    <div v-if="selectedEvent" class="has-text-centered icons">
+      <button v-if="!editingEvent" @click.stop="startEditingEvent">Edit</button>
+      <button @click.stop="deleteEvent">Delete</button>
+    </div>
+    <div v-if="editingEvent" class="has-text-centered">
+      <div class="button-group">
+        <button v-if="!submittingEvent" @click.stop="submitEvent">
+          Submit
+        </button>
         <button @click.stop="cancelEditingEvent">Cancel</button>
       </div>
     </div>
@@ -35,6 +40,7 @@ export default {
       newEventDetails: "",
       editingEvent: false,
       selectedEvent: false,
+      submittingEvent: false,
     };
   },
   methods: {
@@ -48,13 +54,9 @@ export default {
       this.editingEvent = true;
       this.newEventDetails = this.event.details;
     },
-    finishEditingEvent() {
-      if (this.newEventDetails === "") return;
-
-      store.updateEvent(this.day.id, this.event.details, this.newEventDetails);
-      this.newEventDetails = "";
-      this.editingEvent = false;
-      this.selectedEvent = false;
+    submitEvent() {
+      // Perform the submit action here
+      console.log("Submit clicked");
     },
     cancelEditingEvent() {
       this.newEventDetails = "";
@@ -105,6 +107,12 @@ export default {
     &:focus {
       outline: none;
     }
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
   }
 }
 </style>
