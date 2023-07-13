@@ -1,9 +1,11 @@
 import { seedData } from "./seed.js";
+import { reactive, toRefs } from "vue"; // You import Vue from 'vue' for Vue 2
 
 export const store = {
-  state: {
+  state: reactive({
+    // 'reactive' makes your state reactive
     seedData,
-  },
+  }),
 
   getActiveDay() {
     return this.state.seedData.find((day) => day.active);
@@ -14,9 +16,12 @@ export const store = {
     this.state.seedData.find((day) => day.id === dayId).active = true;
   },
 
-  submitEvent(eventDetails) {
-    const activeDay = this.getActiveDay();
-    activeDay.events.push({ details: eventDetails, edit: false });
+  submitEvent(dayId, eventDetails) {
+    const activeDay = this.state.seedData.find((day) => day.id === dayId);
+    activeDay.events = [
+      ...activeDay.events,
+      { details: eventDetails, edit: false },
+    ]; // The spread operator (...) is used here to create a new array, which ensures reactivity.
   },
 
   updateEvent(dayId, originalEventDetails, newEventDetails) {
@@ -47,3 +52,5 @@ export const store = {
     });
   },
 };
+
+export default toRefs(store.state); // 'toRefs' converts the reactive state to refs, this is required for Vue 3 and can be omitted for Vue 2

@@ -35,6 +35,14 @@ export default {
       });
     },
   },
+  watch: {
+    "day.events": {
+      deep: true,
+      handler(newValue) {
+        console.log("Events updated:", newValue);
+      },
+    },
+  },
 };
 </script>
 

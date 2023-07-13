@@ -9,7 +9,11 @@
       />
       <p class="calendar-entry-day">
         Day of event:
-        <span class="bold">{{ titleOfActiveDay }}</span>
+        <select v-model="selectedDay">
+          <option v-for="day in days" :key="day.id" :value="day.id">
+            {{ day.fullTitle }}
+          </option>
+        </select>
       </p>
       <a
         @click="submitEvent(inputEntry)"
@@ -31,21 +35,15 @@ export default {
   data() {
     return {
       inputEntry: "",
+      selectedDay: store.getActiveDay().id,
       error: false,
+      days: store.state.seedData, // Using the seedData from the store directly
     };
-  },
-  computed: {
-    titleOfActiveDay() {
-      // retrieve the active day's title from the store
-      // if this doesn't work, adjust it according to your store structure
-      return store.getActiveDay().title;
-    },
   },
   methods: {
     submitEvent(eventDetails) {
-      if (eventDetails === "") return (this.error = true);
-
-      store.submitEvent(store.getActiveDay().id, eventDetails);
+      if (!this.selectedDay || eventDetails === "") return (this.error = true);
+      store.submitEvent(this.selectedDay, eventDetails);
       this.inputEntry = "";
       this.error = false;
     },
