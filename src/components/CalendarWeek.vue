@@ -26,3 +26,16 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+#calendar-week {
+  margin-bottom: 50px;
+  .column {
+    padding: 0 0 0 0;
+  }
+
+  &:last-child {
+    border-right: 1px solid #8f8f8f;
+  }
+}
+</style>

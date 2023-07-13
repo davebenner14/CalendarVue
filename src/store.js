@@ -22,7 +22,7 @@ export const store = {
   },
 
   editEvent(dayId, eventDetails) {
-    this.resetEditOfAllEvents(); // reset truthy edit events to false
+    this.resetEditOfAllEvents();
     const eventObj = this.getEventObject(dayId, eventDetails);
     eventObj.edit = true;
   },
@@ -41,13 +41,11 @@ export const store = {
     dayObj.events.splice(eventIndexToRemove, 1);
   },
 
-  // helper function to prevent duplicate code
   getEventObject(dayId, eventDetails) {
     const dayObj = this.state.seedData.find((day) => day.id === dayId);
     return dayObj.events.find((event) => event.details === eventDetails);
   },
 
-  // helper function that runs through all data and sets edit prop to false
   resetEditOfAllEvents() {
     this.state.seedData.forEach((dayObj) => {
       dayObj.events.forEach((event) => {

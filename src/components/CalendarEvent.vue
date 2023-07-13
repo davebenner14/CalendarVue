@@ -63,3 +63,28 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.day-event {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  display: block;
+  color: #4c4c4c;
+  padding: 5px;
+
+  .details {
+    display: block;
+  }
+
+  input {
+    background: none;
+    border: 0;
+    border-bottom: 1px solid #fff;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+</style>

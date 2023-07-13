@@ -16,6 +16,9 @@ export default {
 </script>
 
 <style>
+@import url("https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css");
+@import url("https://use.fontawesome.com/releases/v5.15.4/css/all.css");
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
