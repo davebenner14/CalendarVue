@@ -1,29 +1,24 @@
 <template>
-  <div class="day-event" :style="getEventBackgroundColor">
-    <div v-if="!event.edit">
-      <span class="has-text-centered details">{{ event.details }}</span>
-      <div class="has-text-centered icons">
-        <i
-          class="fa fa-pencil-square edit-icon"
-          @click="editEvent(day.id, event.details)"
-        ></i>
-        <i
-          class="fa fa-trash-o delete-icon"
-          @click="deleteEvent(day.id, event.details)"
-        ></i>
-      </div>
+  <div
+    class="day-event"
+    :style="getEventBackgroundColor"
+    :class="{ selected: selectedEvent }"
+    @click.stop="selectEvent"
+  >
+    <span class="has-text-centered details">{{ event.details }}</span>
+    <div v-if="selectedEvent" class="has-text-centered icons">
+      <button v-if="!editingEvent" @click.stop="startEditingEvent">Edit</button>
+      <button @click.stop="deleteEvent">Delete</button>
     </div>
-    <div v-if="event.edit">
+    <div v-if="editingEvent">
       <input
         v-model="newEventDetails"
         type="text"
         :placeholder="event.details"
       />
       <div class="has-text-centered icons">
-        <i
-          class="fa fa-check"
-          @click="updateEvent(day.id, event.details, newEventDetails)"
-        ></i>
+        <button @click.stop="finishEditingEvent">Submit</button>
+        <button @click.stop="cancelEditingEvent">Cancel</button>
       </div>
     </div>
   </div>
@@ -38,20 +33,37 @@ export default {
   data() {
     return {
       newEventDetails: "",
+      editingEvent: false,
+      selectedEvent: false,
     };
   },
   methods: {
-    editEvent(dayId, eventDetails) {
-      store.editEvent(dayId, eventDetails);
+    selectEvent() {
+      if (!this.editingEvent) {
+        this.selectedEvent = true;
+      }
     },
-    updateEvent(dayId, originalEventDetails, updatedEventDetails) {
-      if (updatedEventDetails === "")
-        originalEventDetails = updatedEventDetails;
-      store.updateEvent(dayId, originalEventDetails, updatedEventDetails);
+    startEditingEvent() {
+      this.selectedEvent = false;
+      this.editingEvent = true;
+      this.newEventDetails = this.event.details;
+    },
+    finishEditingEvent() {
+      if (this.newEventDetails === "") return;
+
+      store.updateEvent(this.day.id, this.event.details, this.newEventDetails);
       this.newEventDetails = "";
+      this.editingEvent = false;
+      this.selectedEvent = false;
     },
-    deleteEvent(dayId, eventDetails) {
-      store.deleteEvent(dayId, eventDetails);
+    cancelEditingEvent() {
+      this.newEventDetails = "";
+      this.editingEvent = false;
+      this.selectedEvent = false;
+    },
+    deleteEvent() {
+      store.deleteEvent(this.day.id, this.event.details);
+      this.selectedEvent = false;
     },
   },
   computed: {
@@ -73,6 +85,14 @@ export default {
   padding: 5px;
 
   .details {
+    display: block;
+  }
+
+  .icons {
+    display: none;
+  }
+
+  &.selected .icons {
     display: block;
   }
 

@@ -36,14 +36,16 @@ export default {
   },
   computed: {
     titleOfActiveDay() {
-      return store.getActiveDay().fullTitle;
+      // retrieve the active day's title from the store
+      // if this doesn't work, adjust it according to your store structure
+      return store.getActiveDay().title;
     },
   },
   methods: {
     submitEvent(eventDetails) {
       if (eventDetails === "") return (this.error = true);
 
-      store.submitEvent(eventDetails);
+      store.submitEvent(store.getActiveDay().id, eventDetails);
       this.inputEntry = "";
       this.error = false;
     },

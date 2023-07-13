@@ -1,5 +1,5 @@
 <template>
-  <div class="day column" @click="setActiveDay(day.id)">
+  <div class="day column" @click="setActiveDay">
     <div class="day-banner has-text-white has-text-centered">
       {{ day.abbvTitle }}
     </div>
@@ -10,6 +10,7 @@
         :key="day.events.indexOf(event)"
         :event="event"
         :day="day"
+        v-model="event.selectedEvent"
       />
     </div>
   </div>
@@ -26,8 +27,13 @@ export default {
   },
   props: ["day"],
   methods: {
-    setActiveDay(dayId) {
-      store.setActiveDay(dayId);
+    setActiveDay() {
+      store.setActiveDay(this.day.id);
+    },
+    deselectAllEvents() {
+      this.day.events.forEach((event) => {
+        event.selectedEvent = false;
+      });
     },
   },
 };
