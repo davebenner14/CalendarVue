@@ -1,6 +1,7 @@
 <template>
   <div id="calendar-entry">
-    <div class="calendar-entry-note">
+    <button v-if="!showForm" @click="showForm = true">New Event</button>
+    <div v-else class="calendar-entry-note">
       <input
         v-model="inputEntry"
         type="text"
@@ -20,6 +21,9 @@
         class="button is-primary is-small is-outlined"
         >Submit</a
       >
+      <a @click="showForm = false" class="button is-small is-outlined"
+        >Cancel</a
+      >
     </div>
     <p style="color: red; font-size: 13px; margin-top: 10px" v-if="error">
       You must type something first!
@@ -38,6 +42,7 @@ export default {
       selectedDay: store.getActiveDay().id,
       error: false,
       days: store.state.seedData, // Using the seedData from the store directly
+      showForm: false, // New variable to control the visibility of the form
     };
   },
   methods: {
@@ -46,6 +51,7 @@ export default {
       store.submitEvent(this.selectedDay, eventDetails);
       this.inputEntry = "";
       this.error = false;
+      this.showForm = false;
     },
   },
 };
