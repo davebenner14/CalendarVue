@@ -1,9 +1,8 @@
 import { seedData } from "./seed.js";
-import { reactive, toRefs } from "vue"; // You import Vue from 'vue' for Vue 2
+import { reactive, toRefs } from "vue";
 
 export const store = {
   state: reactive({
-    // 'reactive' makes your state reactive
     seedData,
   }),
 
@@ -16,20 +15,21 @@ export const store = {
     this.state.seedData.find((day) => day.id === dayId).active = true;
   },
 
-  submitEvent(dayId, eventDetails) {
+  submitEvent(dayId, eventDetails, eventColor) {
     const activeDay = this.state.seedData.find((day) => day.id === dayId);
     activeDay.events = [
       ...activeDay.events,
-      { details: eventDetails, edit: false },
-    ]; // The spread operator (...) is used here to create a new array, which ensures reactivity.
+      { details: eventDetails, edit: false, color: eventColor }, // Also save the color with the event
+    ];
   },
 
-  updateEvent(dayId, originalEventDetails, newEventDetails) {
+  updateEvent(dayId, originalEventDetails, newEventDetails, newEventColor) {
     const dayObj = this.state.seedData.find((day) => day.id === dayId);
     const eventObj = dayObj.events.find(
       (event) => event.details === originalEventDetails
     );
     eventObj.details = newEventDetails;
+    eventObj.color = newEventColor || eventObj.color; // Allow the color to be updated
     eventObj.edit = false;
   },
 
@@ -53,4 +53,4 @@ export const store = {
   },
 };
 
-export default toRefs(store.state); // 'toRefs' converts the reactive state to refs, this is required for Vue 3 and can be omitted for Vue 2
+export default toRefs(store.state);

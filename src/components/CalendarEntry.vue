@@ -16,6 +16,18 @@
           </option>
         </select>
       </p>
+      <p class="calendar-entry-color">
+        Event color:
+        <select v-model="selectedColor">
+          <option value="#C686B9">Purple</option>
+          <option value="#FFA4AC">Red</option>
+          <option value="#90C3E6">Blue</option>
+          <option value="#82D7DE">Teal</option>
+          <option value="#A1D7A4">Green</option>
+          <option value="#FFE08C">Yellow</option>
+          <option value="#FFBE8B">Orange</option>
+        </select>
+      </p>
       <a
         @click="submitEvent(inputEntry)"
         class="button is-primary is-small is-outlined"
@@ -40,15 +52,16 @@ export default {
     return {
       inputEntry: "",
       selectedDay: store.getActiveDay().id,
+      selectedColor: "#FF9999",
       error: false,
-      days: store.state.seedData, // Using the seedData from the store directly
-      showForm: false, // New variable to control the visibility of the form
+      days: store.state.seedData,
+      showForm: false,
     };
   },
   methods: {
     submitEvent(eventDetails) {
       if (!this.selectedDay || eventDetails === "") return (this.error = true);
-      store.submitEvent(this.selectedDay, eventDetails);
+      store.submitEvent(this.selectedDay, eventDetails, this.selectedColor); // Pass selectedColor to the submitEvent method
       this.inputEntry = "";
       this.error = false;
       this.showForm = false;

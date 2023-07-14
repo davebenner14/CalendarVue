@@ -1,11 +1,24 @@
+function getRandomColor() {
+  const colors = [
+    "#FFA4AC",
+    "#C686B9",
+    "#90C3E6",
+    "#82D7DE",
+    "#A1D7A4",
+    "#FFE08C",
+    "#FFBE8B",
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
 export const seedData = [
   {
     id: 1,
     abbvTitle: "Mon",
     fullTitle: "Monday",
     events: [
-      { details: "Get Groceries", edit: false },
-      { details: "Carpool", edit: false },
+      { details: "Get Groceries", edit: false, color: getRandomColor() },
+      { details: "Carpool", edit: false, color: getRandomColor() },
     ],
     active: true,
   },
@@ -14,8 +27,8 @@ export const seedData = [
     abbvTitle: "Tue",
     fullTitle: "Tuesday",
     events: [
-      { details: "Meeting with Boss", edit: false },
-      { details: "Gym", edit: false },
+      { details: "Meeting with Boss", edit: false, color: getRandomColor() },
+      { details: "Gym", edit: false, color: getRandomColor() },
     ],
     active: false,
   },
@@ -24,8 +37,8 @@ export const seedData = [
     abbvTitle: "Wed",
     fullTitle: "Wednesday",
     events: [
-      { details: "Take Dog to Vet", edit: false },
-      { details: "Swimming Lessons", edit: false },
+      { details: "Take Dog to Vet", edit: false, color: getRandomColor() },
+      { details: "Swimming Lessons", edit: false, color: getRandomColor() },
     ],
     active: false,
   },
@@ -34,8 +47,8 @@ export const seedData = [
     abbvTitle: "Thu",
     fullTitle: "Thursday",
     events: [
-      { details: "Finish Report", edit: false },
-      { details: "Book Club", edit: false },
+      { details: "Finish Report", edit: false, color: getRandomColor() },
+      { details: "Book Club", edit: false, color: getRandomColor() },
     ],
     active: false,
   },
@@ -44,8 +57,8 @@ export const seedData = [
     abbvTitle: "Fri",
     fullTitle: "Friday",
     events: [
-      { details: "Happy Hour", edit: false },
-      { details: "Dinner with Friends", edit: false },
+      { details: "Happy Hour", edit: false, color: getRandomColor() },
+      { details: "Dinner with Friends", edit: false, color: getRandomColor() },
     ],
     active: false,
   },
@@ -54,8 +67,8 @@ export const seedData = [
     abbvTitle: "Sat",
     fullTitle: "Saturday",
     events: [
-      { details: "Hiking Trip", edit: false },
-      { details: "Grocery Shopping", edit: false },
+      { details: "Hiking Trip", edit: false, color: getRandomColor() },
+      { details: "Grocery Shopping", edit: false, color: getRandomColor() },
     ],
     active: false,
   },
@@ -64,8 +77,12 @@ export const seedData = [
     abbvTitle: "Sun",
     fullTitle: "Sunday",
     events: [
-      { details: "Relaxing", edit: false },
-      { details: "Preparing for the Week", edit: false },
+      { details: "Relaxing", edit: false, color: getRandomColor() },
+      {
+        details: "Preparing for the Week",
+        edit: false,
+        color: getRandomColor(),
+      },
     ],
     active: false,
   },
