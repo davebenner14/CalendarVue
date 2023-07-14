@@ -21,6 +21,21 @@ export function getStartOfWeek(date) {
   }
   return startOfWeek;
 }
+
+// Add your event titles array here
+const eventTitles = [
+  "Team meeting",
+  "Gym workout",
+  "Grocery shopping",
+  "Dinner with friends",
+  "Doctor's appointment",
+  "Book club meeting",
+  "Volunteer work",
+  "Movie night",
+  "Yoga class",
+  "Date night",
+];
+
 export function initializeWeek(startOfWeek) {
   let weekData = [];
   for (let i = 0; i < 7; i++) {
@@ -34,9 +49,12 @@ export function initializeWeek(startOfWeek) {
     let events = [];
     let eventCount = Math.floor(Math.random() * 3) + 1; // random number between 1 and 3
     for (let j = 0; j < eventCount; j++) {
+      // Pick a random event title
+      let title = eventTitles[Math.floor(Math.random() * eventTitles.length)];
+
       events.push({
         id: j,
-        title: `Event ${j + 1}`,
+        title: title,
         time: `${j + 9}:00 AM`, // just for example, you may want to generate random time as well
         color: getRandomColor(), // get random color for each event
       });
@@ -51,5 +69,6 @@ export function initializeWeek(startOfWeek) {
       active: date.toDateString() === new Date().toDateString(), // set today to active
     });
   }
+  console.log(weekData); // Add this line
   return weekData;
 }

@@ -6,12 +6,12 @@
     @click.stop="selectEvent"
   >
     <span class="has-text-centered details">
-      <span v-if="!editingEvent">{{ event.details }}</span>
+      <span v-if="!editingEvent">{{ event.title }}</span>
       <input
         v-else
         v-model="newEventDetails"
         type="text"
-        :placeholder="event.details"
+        :placeholder="event.title"
       />
     </span>
     <div v-if="selectedEvent" class="has-text-centered icons">
@@ -52,13 +52,13 @@ export default {
     startEditingEvent() {
       this.selectedEvent = false;
       this.editingEvent = true;
-      this.newEventDetails = this.event.details;
+      this.newEventDetails = this.event.title;
     },
     submitEvent() {
       if (this.newEventDetails === "") return;
 
       this.submittingEvent = true;
-      store.updateEvent(this.day.id, this.event.details, this.newEventDetails);
+      store.updateEvent(this.day.id, this.event.title, this.newEventDetails);
       this.newEventDetails = "";
       this.editingEvent = false;
       this.selectedEvent = false;
@@ -72,7 +72,7 @@ export default {
       this.selectedEvent = false;
     },
     deleteEvent() {
-      store.deleteEvent(this.day.id, this.event.details);
+      store.deleteEvent(this.day.id, this.event.title);
       this.selectedEvent = false;
     },
   },

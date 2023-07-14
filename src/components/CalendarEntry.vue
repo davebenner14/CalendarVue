@@ -54,14 +54,14 @@ export default {
       selectedDay: store.getActiveDay().id,
       selectedColor: "#FF9999",
       error: false,
-      days: store.state.seedData,
+      days: store.state.weekData,
       showForm: false,
     };
   },
   methods: {
-    submitEvent(eventDetails) {
-      if (!this.selectedDay || eventDetails === "") return (this.error = true);
-      store.submitEvent(this.selectedDay, eventDetails, this.selectedColor); // Pass selectedColor to the submitEvent method
+    submitEvent(eventTitle) {
+      if (!this.selectedDay || eventTitle === "") return (this.error = true);
+      store.submitEvent(this.selectedDay, eventTitle, this.selectedColor); // Pass selectedColor to the submitEvent method
       this.inputEntry = "";
       this.error = false;
       this.showForm = false;

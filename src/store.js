@@ -18,28 +18,28 @@ export const store = {
     this.state.weekData.find((day) => day.id === dayId).active = true;
   },
 
-  submitEvent(dayId, eventDetails, eventColor) {
+  submitEvent(dayId, eventTitle, eventColor) {
     const activeDay = this.state.weekData.find((day) => day.id === dayId);
     activeDay.events = [
       ...activeDay.events,
-      { details: eventDetails, edit: false, color: eventColor }, // Also save the color with the event
+      { title: eventTitle, edit: false, color: eventColor }, // Also save the color with the event
     ];
   },
 
-  updateEvent(dayId, originalEventDetails, newEventDetails, newEventColor) {
+  updateEvent(dayId, originalEventTitle, newEventTitle, newEventColor) {
     const dayObj = this.state.weekData.find((day) => day.id === dayId);
     const eventObj = dayObj.events.find(
-      (event) => event.details === originalEventDetails
+      (event) => event.title === originalEventTitle
     );
-    eventObj.details = newEventDetails;
+    eventObj.title = newEventTitle;
     eventObj.color = newEventColor || eventObj.color; // Allow the color to be updated
     eventObj.edit = false;
   },
 
-  deleteEvent(dayId, eventDetails) {
+  deleteEvent(dayId, eventTitle) {
     const dayObj = this.state.weekData.find((day) => day.id === dayId);
     const eventIndex = dayObj.events.findIndex(
-      (event) => event.details === eventDetails
+      (event) => event.title === eventTitle
     );
 
     if (eventIndex >= 0) {
