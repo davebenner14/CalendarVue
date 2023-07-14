@@ -1,7 +1,16 @@
 <template>
   <div id="app">
-    <CalendarWeek />
-    <CalendarEntry />
+    <header class="header">
+      <h1 class="title">Calendar Vue</h1>
+      <p class="description">
+        Welcome to my Calendar Vue! This app is designed to add, show, edit, and
+        delete events in a calendar view, displaying one week at a time.
+      </p>
+    </header>
+    <main class="main">
+      <CalendarWeek />
+      <CalendarEntry />
+    </main>
   </div>
 </template>
 
@@ -26,5 +35,25 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.header {
+  padding: 40px;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.description {
+  font-size: 18px;
+  color: #555;
+}
+
+.main {
+  margin: 0 auto;
+  /* max-width: 600px; */
 }
 </style>

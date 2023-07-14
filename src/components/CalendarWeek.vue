@@ -1,12 +1,14 @@
 <template>
   <div id="calendar-week" class="container">
-    <div>{{ currentMonth }}</div>
-    <div class="columns is-mobile">
-      <CalendarDay
-        v-for="day in sharedState.weekData"
-        :key="day.id"
-        :day="day"
-      />
+    <div class="month-container">{{ currentMonth }}</div>
+    <div class="calendar-container">
+      <div class="columns is-mobile">
+        <CalendarDay
+          v-for="day in sharedState.weekData"
+          :key="day.id"
+          :day="day"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -59,6 +61,13 @@ export default {
 <style lang="scss" scoped>
 #calendar-week {
   margin-bottom: 50px;
+
+  .month-container {
+    font-size: 24px; /* Adjust the font size as desired */
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
   .column {
     padding: 0 0 0 0;
   }
