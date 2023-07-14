@@ -1,5 +1,9 @@
 <template>
-  <div class="day column" @click="setActiveDay">
+  <div
+    class="day column"
+    @click="setActiveDay"
+    :class="{ 'is-today': isToday }"
+  >
     <div class="day-banner has-text-white has-text-centered">
       {{ day.abbvTitle }}
     </div>
@@ -25,6 +29,11 @@ export default {
     CalendarEvent,
   },
   props: ["day"],
+  computed: {
+    isToday() {
+      return this.day.date.toDateString() === new Date().toDateString();
+    },
+  },
   methods: {
     setActiveDay() {
       store.setActiveDay(this.day.id);
@@ -71,6 +80,11 @@ export default {
 
   .day-details {
     padding: 10px;
+  }
+
+  &.is-today {
+    background-color: #333;
+    color: #fff;
   }
 }
 </style>

@@ -1,22 +1,25 @@
-import { seedData } from "./seed.js";
 import { reactive, toRefs } from "vue";
+import { getStartOfWeek, initializeWeek } from "./initialize.js";
+
+let currentDate = new Date();
+let startOfWeek = getStartOfWeek(currentDate);
 
 export const store = {
   state: reactive({
-    seedData,
+    weekData: initializeWeek(startOfWeek),
   }),
 
   getActiveDay() {
-    return this.state.seedData.find((day) => day.active);
+    return this.state.weekData.find((day) => day.active);
   },
 
   setActiveDay(dayId) {
     this.resetEditOfAllEvents();
-    this.state.seedData.find((day) => day.id === dayId).active = true;
+    this.state.weekData.find((day) => day.id === dayId).active = true;
   },
 
   submitEvent(dayId, eventDetails, eventColor) {
-    const activeDay = this.state.seedData.find((day) => day.id === dayId);
+    const activeDay = this.state.weekData.find((day) => day.id === dayId);
     activeDay.events = [
       ...activeDay.events,
       { details: eventDetails, edit: false, color: eventColor }, // Also save the color with the event
@@ -24,7 +27,7 @@ export const store = {
   },
 
   updateEvent(dayId, originalEventDetails, newEventDetails, newEventColor) {
-    const dayObj = this.state.seedData.find((day) => day.id === dayId);
+    const dayObj = this.state.weekData.find((day) => day.id === dayId);
     const eventObj = dayObj.events.find(
       (event) => event.details === originalEventDetails
     );
@@ -34,7 +37,7 @@ export const store = {
   },
 
   deleteEvent(dayId, eventDetails) {
-    const dayObj = this.state.seedData.find((day) => day.id === dayId);
+    const dayObj = this.state.weekData.find((day) => day.id === dayId);
     const eventIndex = dayObj.events.findIndex(
       (event) => event.details === eventDetails
     );
@@ -45,7 +48,7 @@ export const store = {
   },
 
   resetEditOfAllEvents() {
-    this.state.seedData.forEach((dayObj) => {
+    this.state.weekData.forEach((dayObj) => {
       dayObj.events.forEach((event) => {
         event.edit = false;
       });

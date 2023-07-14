@@ -1,8 +1,9 @@
 <template>
   <div id="calendar-week" class="container">
+    <div>{{ currentMonth }}</div>
     <div class="columns is-mobile">
       <CalendarDay
-        v-for="day in sharedState.seedData"
+        v-for="day in sharedState.weekData"
         :key="day.id"
         :day="day"
       />
@@ -18,6 +19,34 @@ export default {
   name: "CalendarWeek",
   components: {
     CalendarDay,
+  },
+  computed: {
+    currentMonth() {
+      const firstDay = this.sharedState.weekData[0].date;
+      const lastDay = this.sharedState.weekData[6].date;
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      if (firstDay.getMonth() === lastDay.getMonth()) {
+        return monthNames[firstDay.getMonth()];
+      } else {
+        return `${monthNames[firstDay.getMonth()]}/${
+          monthNames[lastDay.getMonth()]
+        }`;
+      }
+    },
   },
   data() {
     return {
